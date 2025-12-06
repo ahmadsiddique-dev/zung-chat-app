@@ -1,0 +1,102 @@
+import { authModel } from "../models/user.model.js";
+import customError from "../utils/customError.js";
+
+
+export const userSignupControler = async (req, res) => {
+  const { userName, password, email } = req.body.data;
+  try {
+    if (!userName || !password || !email)
+      throw new customError("Creadiential are missing!", 403);
+
+    const findUser = await authModel.findOne({ email });
+    
+    if (findUser) throw new customError("User already exists", 409);
+
+    
+    const user = await authModel.create({
+      userName,
+      email,
+      password,
+    })
+
+    const refreshToken = await user.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
+
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave : false });
+
+    res.clearCookie("refreshToken")
+    
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly : true,
+      // secure : true,
+      sameSite : "lax",
+      maxAge : 30 * 24 * 60 * 60 * 1000
+    })
+
+    const data = {
+      _id : user._id,
+      userName : user.userName,
+      email : user.email,
+      accessToken : accessToken
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    res
+      .status(error.statusCode || 500)
+      .json({ status: "fail", message: error.message });
+  }
+};
+
+
+export const userLoginControler = async (req, res) => {
+  const { password, email } = req.body;
+  try {
+    if (!password || !email) throw new customError("Missing Credentials", 403);
+
+    const user = await authModel.findOne({ email })
+      .select("-createdAt -updatedAt -refreshToken");
+
+    if (!user) throw new customError("User not found", 404);
+
+    console.log(user)
+    const pass = await user.verifyPassword(password);
+
+    if (!pass) throw new customError("Invalid Credientials", 401)
+
+    const refreshToken = user.generateRefreshToken();
+    const accessToken = user.generateAccessToken();
+    
+    await user.updateOne({ refreshToken : refreshToken })
+    res.clearCookie(refreshToken);
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      // secure : true,
+      sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000 
+    });
+
+    const data = {
+      _id : user._id,
+      userName : user.userName,
+      email : user.email,
+      accessToken : accessToken
+    }
+    
+    res.status(200).json(data);
+
+  } catch (error) {
+    res.status(error.statusCode || 500).json({
+      status: "fail",
+      message: error.message
+    });
+  } 
+};
+
+
+export const handleRefresh = (req, res) => {
+  const {data} = req
+  res.status(200).json(data);
+}
