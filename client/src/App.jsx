@@ -16,15 +16,23 @@ function App() {
   const auth = useSelector((state) => state.user.status.auth);
   const profile = useSelector((state) => state.user.data);
 
-  console.log("Profile : ", profile);
+ const checking = async () => {
+  dispatch(accessThunk())
+    .unwrap()
+    .then((data) => {
+      console.log("data : ", data)
+    })
+    .catch(() => {
+      navigate("/login")
+    });
+};
+
   useEffect(() => {
-    dispatch(accessThunk());
+    checking();
   }, []);
 
   useEffect(() => {
-    if (!loading && auth === false) {
-      navigate("/login");
-    }
+    
   }, [loading, auth]);
 
   const handleSidebar = () => {

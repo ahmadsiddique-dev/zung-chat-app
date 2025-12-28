@@ -20,53 +20,50 @@ const initialValue = {
   data : {
   userName: null,
   email: null,
-  password: null,
   accessToken : null
   },
   status : {
     loading: true,
-    auth : false
+    auth : false,
+    logLoadingBtn : false,
+    signLoadingBtn : false,
   },
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState: initialValue,
-  reducers: {
-    login: (state, action) => {},
-    signup: (state, action) => {
-      console.log(action.payload);
-    },
-  },
   extraReducers: (builder) => {
     builder
+
       // For login
+
       .addCase(userLoginThunk.pending, (state, action) => {
-        console.log("pending");
+        state.status.logLoadingBtn = true
       })
       .addCase(userLoginThunk.fulfilled, (state, action) => {
-        console.log(action.payload)
+        state.status.logLoadingBtn = false
       })
       .addCase(userLoginThunk.rejected, (state, action) => {
-        console.log("rejected");
+        state.status.logLoadingBtn = false
       })
 
       // For sign up
 
       .addCase(userSignupThunk.pending, (state, action) => {
-        console.log("pending");
+        state.status.signLoadingBtn = true
       })
       .addCase(userSignupThunk.fulfilled, (state, action) => {
-        state.data = {...state.data, ...action.payload}
+        state.status.signLoadingBtn = false
       })
       .addCase(userSignupThunk.rejected, (state, action) => {
-        console.log("rejected");
+        state.status.signLoadingBtn = false
       })
 
       // For Refreshing Tokens
 
       .addCase(accessThunk.pending, (state, action) => {
-        console.log("pending accesss");
+        state.status.loading = true
       })
       .addCase(accessThunk.fulfilled, (state, action) => {
         state.data = {...state.data, ...action.payload}

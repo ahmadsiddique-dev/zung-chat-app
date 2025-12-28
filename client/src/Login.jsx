@@ -1,13 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "./features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { userLoginThunk } from "./features/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const loader = useSelector((state) => state.user.status.logLoadingBtn);
   const {
     register,
     handleSubmit,
@@ -15,15 +15,15 @@ const Login = () => {
   } = useForm();
 
 const onSubmit = async (data) => {
-  try {
-    await dispatch(userLoginThunk(data)).unwrap();
-    
-    if (userLoginThunk.fulfilled) {
-      navigate("/")
-    }
-  } catch (err) {
-    console.error("Login failed:", err);
-  }
+  await dispatch(userLoginThunk(data))
+  .unwrap()
+    .then((data) => {
+      console.log(data)
+      navigate("/");
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 };
 
 
@@ -78,7 +78,7 @@ const onSubmit = async (data) => {
               type="submit"
               className="mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition-colors"
             >
-              Login
+              {loader ? "Loading..." : "Login"}
             </button>
 
             <p className="text-slate-400 text-sm mt-2 text-center">
