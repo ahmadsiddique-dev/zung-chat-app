@@ -5,28 +5,29 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Login from './Login.jsx'
 import SignUp from './Signup.jsx'
-import {Provider} from "react-redux"
+import { Provider } from "react-redux"
 import { userStore } from './store/user.js'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const router = createBrowserRouter([
   {
-   path : "/",
-   element : <App/>
+    path: "/",
+    element: <ProtectedRoute><App /></ProtectedRoute>
   },
   {
-    path : "/login",
-    element : <Login/>
+    path: "/login",
+    element: <Login />
   },
   {
-    path : "/signup",
-    element : <SignUp />
+    path: "/signup",
+    element: <SignUp />
   }
 ])
-{/* <RouterProvider /> */}
+{/* <RouterProvider /> */ }
 createRoot(document.getElementById('root')).render(
   <Provider store={userStore}>
-      <RouterProvider router={router} />
-    </Provider>
+    <RouterProvider router={router} />
+  </Provider>
   //     <StrictMode>
   // </StrictMode>
 )

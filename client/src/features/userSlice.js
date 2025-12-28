@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { accessThunk } from "./api.thunk";
+import { accessThunk, logoutThunk } from "./api.thunk";
 
 export const userLoginThunk = createAsyncThunk("user/login", async (data) => {
   const res = await axios.post(`${import.meta.env.VITE_B_API}/api/auth/login`, data, {
@@ -11,19 +11,20 @@ export const userLoginThunk = createAsyncThunk("user/login", async (data) => {
 });
 
 export const userSignupThunk = createAsyncThunk("user/signup", async (data) => {
-  const res = await axios.post(`${import.meta.env.VITE_B_API}/api/auth/signup`, {data}, {withCredentials : true})
+  const res = await axios.post(`${import.meta.env.VITE_B_API}/api/auth/signup`, data, {withCredentials : true})
 
   return res.data;
 });
 
 const initialValue = {
   data : {
+  _id: null,
   userName: null,
   email: null,
   accessToken : null
   },
   status : {
-    loading: true,
+    loading: false,
     auth : false,
     logLoadingBtn : false,
     signLoadingBtn : false,
@@ -43,6 +44,14 @@ const userSlice = createSlice({
       })
       .addCase(userLoginThunk.fulfilled, (state, action) => {
         state.status.logLoadingBtn = false
+        state.data = {
+          _id: action.payload._id,
+          userName: action.payload.userName,
+          email: action.payload.email,
+          accessToken: action.payload.accessToken
+        };
+        state.status.auth = true;
+        state.status.loading = false;
       })
       .addCase(userLoginThunk.rejected, (state, action) => {
         state.status.logLoadingBtn = false
@@ -55,6 +64,14 @@ const userSlice = createSlice({
       })
       .addCase(userSignupThunk.fulfilled, (state, action) => {
         state.status.signLoadingBtn = false
+        state.data = {
+          _id: action.payload._id,
+          userName: action.payload.userName,
+          email: action.payload.email,
+          accessToken: action.payload.accessToken
+        };
+        state.status.auth = true;
+        state.status.loading = false;
       })
       .addCase(userSignupThunk.rejected, (state, action) => {
         state.status.signLoadingBtn = false
@@ -72,6 +89,17 @@ const userSlice = createSlice({
       })
       .addCase(accessThunk.rejected, (state, action) => {
         state.status.loading = false
+      })
+      
+      // For logout
+      .addCase(logoutThunk.fulfilled, (state) => {
+        state.data = {
+          userName: null,
+          email: null,
+          accessToken: null
+        };
+        state.status.auth = false;
+        state.status.loading = false;
       });
   },
 });

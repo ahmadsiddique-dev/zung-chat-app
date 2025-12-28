@@ -1,14 +1,365 @@
-@import "tailwindcss";
+/* Import Retro Pixel Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
-/* In your custom CSS file or a <style> block */
+/* CSS Reset & Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* 🎮 Retro Color Palette - Inspired by classic 8-bit games */
+  --pixel-primary: #ff6b9d;
+  --pixel-primary-dark: #c84b77;
+  --pixel-secondary: #c06c84;
+  --pixel-accent: #f67280;
+  --pixel-accent-light: #ffb3ba;
+  --pixel-dark: #355c7d;
+  --pixel-darker: #2a2d43;
+  --pixel-black: #1a1a2e;
+  --pixel-white: #f8f9fa;
+  --pixel-gray: #6c757d;
+  --pixel-light-gray: #dee2e6;
+  --pixel-success: #6ab04c;
+  --pixel-warning: #f9ca24;
+  --pixel-danger: #e74c3c;
+  --pixel-info: #4834df;
+  
+  /* Pixel Effects */
+  --pixel-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --pixel-shadow-hover: 2px 2px 0 rgba(0, 0, 0, 0.25);
+  --pixel-shadow-strong: 6px 6px 0 rgba(0, 0, 0, 0.4);
+  --pixel-border-thickness: 3px;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  line-height: 1.5;
+  background: var(--pixel-black);
+  color: var(--pixel-white);
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Pixel Border Utility Classes */
+.pixel-border {
+  border: var(--pixel-border-thickness) solid var(--pixel-dark);
+  box-shadow: var(--pixel-shadow);
+}
+
+.pixel-border-primary {
+  border: var(--pixel-border-thickness) solid var(--pixel-primary);
+  box-shadow: var(--pixel-shadow);
+}
+
+.pixel-border-white {
+  border: var(--pixel-border-thickness) solid var(--pixel-white);
+  box-shadow: var(--pixel-shadow);
+}
+
+/* Retro Button Styles */
+.pixel-button {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  padding: 12px 24px;
+  border: var(--pixel-border-thickness) solid var(--pixel-dark);
+  background: var(--pixel-primary);
+  color: var(--pixel-white);
+  box-shadow: var(--pixel-shadow);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.pixel-button:hover {
+  background: var(--pixel-primary-dark);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+.pixel-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.pixel-button-secondary {
+  background: var(--pixel-secondary);
+  border-color: var(--pixel-dark);
+}
+
+.pixel-button-success {
+  background: var(--pixel-success);
+}
+
+.pixel-button-danger {
+  background: var(--pixel-danger);
+}
+
+/* Pixel Input Styles */
+.pixel-input {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  padding: 12px 16px;
+  border: var(--pixel-border-thickness) solid var(--pixel-dark);
+  background: var(--pixel-darker);
+  color: var(--pixel-white);
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.3);
+  outline: none;
+}
+
+.pixel-input:focus {
+  border-color: var(--pixel-primary);
+  box-shadow: inset 3px 3px 0 rgba(0, 0, 0, 0.3), 0 0 0 2px var(--pixel-primary);
+}
+
+.pixel-input::placeholder {
+  color: var(--pixel-gray);
+  opacity: 0.7;
+}
+
+/* Pixel Headings */
+.pixel-h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 24px;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.pixel-h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 18px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 16px;
+}
+
+.pixel-h3 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
+}
+
+/* Custom Scrollbar - Retro Style */
 .custom-scrollbar::-webkit-scrollbar {
-  @apply w-2;
+  width: 16px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-slate-900; 
+  background: var(--pixel-darker);
+  border: 2px solid var(--pixel-dark);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full;
+  background: var(--pixel-primary);
+  border: 2px solid var(--pixel-dark);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--pixel-primary-dark);
+}
+
+/* Pixel Message Bubble */
+.pixel-message {
+  padding: 12px 16px;
+  border: var(--pixel-border-thickness) solid var(--pixel-dark);
+  background: var(--pixel-darker);
+  box-shadow: var(--pixel-shadow);
+  margin-bottom: 12px;
+  border-radius: 0;
+  position: relative;
+}
+
+.pixel-message-sent {
+  background: var(--pixel-primary);
+  border-color: var(--pixel-primary-dark);
+}
+
+.pixel-message-received {
+  background: var(--pixel-darker);
+  border-color: var(--pixel-dark);
+}
+
+/* Pixel Card/Container */
+.pixel-card {
+  background: var(--pixel-darker);
+  border: var(--pixel-border-thickness) solid var(--pixel-dark);
+  box-shadow: var(--pixel-shadow-strong);
+  padding: 20px;
+}
+
+/* Retro Loading Animation */
+@keyframes pixel-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.pixel-loading {
+  animation: pixel-blink 1s infinite;
+}
+
+/* Pixel Badge for notifications */
+.pixel-badge {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 4px 8px;
+  background: var(--pixel-danger);
+  color: var(--pixel-white);
+  border: 2px solid var(--pixel-black);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  display: inline-block;
+}
+
+/* Online/Offline Status Dots */
+.pixel-status-dot {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--pixel-black);
+  display: inline-block;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pixel-status-online {
+  background: var(--pixel-success);
+}
+
+.pixel-status-offline {
+  background: var(--pixel-gray);
+}
+
+/* Pixel Avatar */
+.pixel-avatar {
+  width: 48px;
+  height: 48px;
+  border: var(--pixel-border-thickness) solid var(--pixel-dark);
+  background: var(--pixel-secondary);
+  box-shadow: var(--pixel-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  color: var(--pixel-white);
+  image-rendering: pixelated;
+}
+
+/* Hover Effects */
+.pixel-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.1s ease;
+}
+
+/* Text Selection */
+::selection {
+  background: var(--pixel-primary);
+  color: var(--pixel-white);
+}
+
+/* Disabled State */
+.pixel-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* Retro Container Max Width */
+.pixel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Screen Effects (Optional CRT) */
+.pixel-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Mobile Styles (Up to 767px) */
+@media (max-width: 767px) {
+  .pixel-h1 {
+    font-size: 18px;
+  }
+  
+  .pixel-h2 {
+    font-size: 14px;
+  }
+  
+  .pixel-h3 {
+    font-size: 12px;
+  }
+  
+  .pixel-button {
+    font-size: 10px;
+    padding: 10px 16px;
+  }
+  
+  .pixel-input {
+    font-size: 16px;
+  }
+  
+  .pixel-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  /* Make sidebar full width on mobile */
+  .mobile-sidebar {
+    width: 100% !important;
+  }
+}
+
+/* Tablet Styles (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pixel-h1 {
+    font-size: 20px;
+  }
+  
+  .pixel-h2 {
+    font-size: 16px;
+  }
+  
+  /* Adjust sidebar width for tablets */
+  .tablet-sidebar {
+    width: 250px !important;
+  }
+}
+
+/* Desktop Styles (1024px and up) */
+@media (min-width: 1024px) {
+  .pixel-container {
+    padding: 0 20px;
+  }
+}
+
+/* Touch-friendly tap targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .pixel-button,
+  .pixel-hover {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }

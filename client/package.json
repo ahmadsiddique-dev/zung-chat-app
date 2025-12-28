@@ -21,6 +21,7 @@
     "react-loader-spinner": "^8.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.6",
+    "socket.io-client": "^4.8.3",
     "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.1.17"
   },

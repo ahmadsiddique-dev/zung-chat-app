@@ -3,7 +3,7 @@ import customError from "../utils/customError.js";
 
 
 export const userSignupControler = async (req, res) => {
-  const { userName, password, email } = req.body.data;
+  const { userName, password, email } = req.body;
   try {
     if (!userName || !password || !email)
       throw new customError("Creadiential are missing!", 403);
@@ -65,8 +65,8 @@ export const userLoginControler = async (req, res) => {
 
     if (!pass) throw new customError("Invalid Credientials", 401)
 
-    const refreshToken = user.generateRefreshToken();
-    const accessToken = user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
     
     await user.updateOne({ refreshToken : refreshToken })
     res.clearCookie(refreshToken);
@@ -100,3 +100,23 @@ export const handleRefresh = (req, res) => {
   const {data} = req
   res.status(200).json(data);
 }
+
+
+export const logoutController = async (req, res) => {
+  try {
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'lax'
+    });
+    
+    res.status(200).json({
+      success: true,
+      message: 'Logged out successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};

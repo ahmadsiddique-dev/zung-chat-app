@@ -2,12 +2,12 @@ import { Schema, model } from "mongoose"
 
 const messageSchema = new Schema({
     chatRoomId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Conversation",
   },
   senderId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: Schema.Types.ObjectId,
+    ref: "Auth",
   },
   content: String,
   createdAt: {

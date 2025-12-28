@@ -2,6 +2,7 @@ import express, { json } from "express";
 import "dotenv/config";
 import cors from "cors";
 import authRouter from "./src/routes/user.routes.js";
+import messageRouter from "./src/routes/message.routes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use("/api/auth", authRouter);
+app.use("/api/messages", messageRouter);
 
 
 export default app; 

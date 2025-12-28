@@ -17,8 +17,7 @@ const SignUp = () => {
   const onSubmit = async (data) => {
     await dispatch(userSignupThunk(data))
       .unwrap()
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         navigate("/");
       })
       .catch((error) => {
@@ -27,91 +26,155 @@ const SignUp = () => {
   };
 
   return (
-    <center className="bg-slate-700 min-h-screen flex items-center justify-center">
-      <div className="bg-slate-900 h-screen flex flex-col max-w-lg mx-auto w-full">
-        {/* Header */}
-        <div className="bg-slate-900 p-4 max-h-[10vh] text-white flex justify-between items-center border-b border-slate-700">
-          <h1 className="text-xl font-bold">Sign Up</h1>
-          <button className="px-3 py-1 bg-blue-600 rounded hover:bg-blue-500">
-            Help
-          </button>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'var(--pixel-black)',
+      padding: '20px'
+    }}>
+      <div style={{
+        width: '100%',
+        maxWidth: '500px'
+      }}>
+        {/* Retro Header */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '40px'
+        }}>
+          <h1 className="pixel-h1" style={{ color: 'var(--pixel-success)', marginBottom: '10px' }}>
+            🎮 ZUNG CHAT
+          </h1>
+          <p className="pixel-h3" style={{ color: 'var(--pixel-accent)' }}>
+            NEW PLAYER REGISTER
+          </p>
         </div>
 
-        {/* Form */}
-        <div className="flex-1 flex items-center justify-center">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="bg-slate-800 p-8 rounded w-80 flex flex-col gap-4"
-          >
-            <h2 className="text-white text-2xl mb-4 text-center">
-              Create Account
-            </h2>
+        {/* Signup Card */}
+        <div className="pixel-card">
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-            {/* Name */}
-            <div className="flex flex-col">
-              <label className="text-white mb-1">Name</label>
+            {/* Username Input */}
+            <div>
+              <label className="pixel-h3" style={{ display: 'block', marginBottom: '8px', color: 'var(--pixel-accent)' }}>
+                USERNAME
+              </label>
               <input
                 type="text"
-                {...register("userName", { required: "Name is required" })}
-                className="p-2 rounded bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                {...register("userName", { required: "Username is required" })}
+                className="pixel-input"
+                style={{ width: '100%' }}
+                placeholder="player1"
               />
-              {errors.name && (
-                <span className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
+              {errors.userName && (
+                <span style={{
+                  color: 'var(--pixel-danger)',
+                  fontSize: '14px',
+                  fontFamily: 'VT323',
+                  display: 'block',
+                  marginTop: '4px'
+                }}>
+                  ⚠️ {errors.userName.message}
                 </span>
               )}
             </div>
 
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-white mb-1">Email</label>
+            {/* Email Input */}
+            <div>
+              <label className="pixel-h3" style={{ display: 'block', marginBottom: '8px', color: 'var(--pixel-accent)' }}>
+                EMAIL
+              </label>
               <input
                 type="email"
                 {...register("email", { required: "Email is required" })}
-                className="p-2 rounded bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pixel-input"
+                style={{ width: '100%' }}
+                placeholder="player@zung.com"
               />
               {errors.email && (
-                <span className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
+                <span style={{
+                  color: 'var(--pixel-danger)',
+                  fontSize: '14px',
+                  fontFamily: 'VT323',
+                  display: 'block',
+                  marginTop: '4px'
+                }}>
+                  ⚠️ {errors.email.message}
                 </span>
               )}
             </div>
 
-            {/* Password */}
-            <div className="flex flex-col">
-              <label className="text-white mb-1">Password</label>
+            {/* Password Input */}
+            <div>
+              <label className="pixel-h3" style={{ display: 'block', marginBottom: '8px', color: 'var(--pixel-accent)' }}>
+                PASSWORD
+              </label>
               <input
                 type="password"
                 {...register("password", { required: "Password is required" })}
-                className="p-2 rounded bg-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="pixel-input"
+                style={{ width: '100%' }}
+                placeholder="••••••••"
               />
               {errors.password && (
-                <span className="text-red-500 text-sm mt-1">
-                  {errors.password.message}
+                <span style={{
+                  color: 'var(--pixel-danger)',
+                  fontSize: '14px',
+                  fontFamily: 'VT323',
+                  display: 'block',
+                  marginTop: '4px'
+                }}>
+                  ⚠️ {errors.password.message}
                 </span>
               )}
             </div>
 
+            {/* Register Button */}
             <button
               type="submit"
-              className="mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition-colors"
+              className="pixel-button pixel-button-success"
+              disabled={loader}
+              style={{ width: '100%', marginTop: '10px' }}
             >
-              {loader ? "Loading..." : "Sign Up"}
+              {loader ? "LOADING..." : "REGISTER"}
             </button>
 
-            <p className="text-slate-400 text-sm mt-2 text-center">
-              Already have an account?{" "}
+            {/* Login Link */}
+            <p style={{
+              textAlign: 'center',
+              fontFamily: 'VT323',
+              fontSize: '18px',
+              color: 'var(--pixel-light-gray)',
+              marginTop: '10px'
+            }}>
+              HAVE AN ACCOUNT?{" "}
               <span
                 onClick={() => navigate("/login")}
-                className="text-blue-400 cursor-pointer"
+                style={{
+                  color: 'var(--pixel-success)',
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }}
               >
-                Login
+                LOGIN HERE
               </span>
             </p>
           </form>
         </div>
+
+        {/* Pixel Art Decoration */}
+        <div style={{
+          textAlign: 'center',
+          marginTop: '30px',
+          fontFamily: 'VT323',
+          color: 'var(--pixel-gray)',
+          fontSize: '16px'
+        }}>
+          ★ ★ ★ GAME START ★ ★ ★
+        </div>
       </div>
-    </center>
+    </div>
   );
 };
 
