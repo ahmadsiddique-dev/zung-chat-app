@@ -12,5 +12,8 @@
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^9.0.0",
         "socket.io": "^4.8.1"
+    },
+    "scripts": {
+        "start": "node server.js"
     }
 }
