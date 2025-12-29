@@ -24,9 +24,11 @@ initializeSocket(io);
 dbConnection()
 .then(() => {
     app.get("/", (req, res) => {
-        res.send({
-            success : true
-        })
+        res.send(
+           <h1>
+                Welcome Ahmad Siddique, How are you dear?
+           </h1>
+        )
     })
     httpServer.listen(port, () => {
         console.log(`App is running at http://localhost:${port}`)
