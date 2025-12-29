@@ -34,7 +34,7 @@ export const getMessages = async (req, res) => {
 // Get all conversations for the authenticated user
 export const getConversations = async (req, res) => {
     try {
-        const userId = req.user;
+        const userId = req.user._id;
         
         const conversations = await conversationModel
             .find({ members: userId })
@@ -58,7 +58,7 @@ export const getConversations = async (req, res) => {
 export const createConversation = async (req, res) => {
     try {
         const { memberId } = req.body;
-        const userId = req.user;
+        const userId = req.user._id;
         
         // Check if conversation already exists between these two users
         let conversation = await conversationModel.findOne({

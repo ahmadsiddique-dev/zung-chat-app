@@ -4,7 +4,7 @@ import customError from "../utils/customError.js";
 // Get all users except current user
 export const getAllUsers = async (req, res) => {
     try {
-        const currentUserId = req.user;
+        const currentUserId = req.user._id;
         
         const users = await authModel
             .find({ _id: { $ne: currentUserId } })
@@ -27,7 +27,7 @@ export const getAllUsers = async (req, res) => {
 export const searchUsers = async (req, res) => {
     try {
         const { q } = req.query;
-        const currentUserId = req.user;
+        const currentUserId = req.user._id;
         
         if (!q) {
             throw new customError("Search query is required", 400);

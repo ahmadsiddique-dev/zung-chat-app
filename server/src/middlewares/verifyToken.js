@@ -27,13 +27,14 @@ export const verifyToken = async (req, res, next) => {
             
             res.cookie("refreshToken", newToken, {
                 httpOnly: true,
-                sameSite: "lax",
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                secure: process.env.NODE_ENV === 'production',
                 maxAge: 60 * 60 * 1000
             });
             
             await user.updateOne({ refreshToken: newToken });
             
-            req.data = {
+            req.user = {
                 _id: user._id,
                 userName: user.userName,
                 email: user.email,
@@ -50,7 +51,11 @@ export const verifyToken = async (req, res, next) => {
     try {
         const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
 
-        req.user = decoded._id;
+        req.user = {
+            _id: decoded._id,
+            userName: decoded.userName,
+            email: decoded.email
+        };
 
         return next();
     } catch (error) {
@@ -73,20 +78,20 @@ export const verifyToken = async (req, res, next) => {
             const accessToken = user.generateAccessToken();
 
             res.cookie("refreshToken", newToken, {
-                httpOnly : true,
-                sameSite : "lax",
-                // secure : true,
-                maxAge : 60 * 60 * 1000
+                httpOnly: true,
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 60 * 60 * 1000
             })
             
             
             await user.updateOne({ refreshToken : newToken})
             
-            req.data = {
-                _id : user._id,
-                userName : user.userName,
-                email : user.email,
-                accessToken : accessToken
+            req.user = {
+                _id: user._id,
+                userName: user.userName,
+                email: user.email,
+                accessToken: accessToken
             }
             next();
         } catch (error) {

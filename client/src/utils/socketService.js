@@ -33,6 +33,11 @@ class SocketService {
             console.error("Socket error:", error);
         });
         
+        this.socket.on("connect_error", (error) => {
+            console.error("Socket connection failed:", error.message);
+            // Authentication might have failed or server is unreachable
+        });
+        
         return this.socket;
     }
     

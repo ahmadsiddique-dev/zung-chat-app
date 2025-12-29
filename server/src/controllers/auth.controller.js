@@ -28,10 +28,10 @@ export const userSignupControler = async (req, res) => {
     res.clearCookie("refreshToken")
     
     res.cookie("refreshToken", refreshToken, {
-      httpOnly : true,
-      secure : process.env.NODE_ENV === "production",
-      sameSite : "lax",
-      maxAge : 30 * 24 * 60 * 60 * 1000
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      maxAge: 30 * 24 * 60 * 60 * 1000
     })
 
     const data = {
@@ -73,8 +73,8 @@ export const userLoginControler = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure : process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000 
     });
 
@@ -97,8 +97,8 @@ export const userLoginControler = async (req, res) => {
 
 
 export const handleRefresh = (req, res) => {
-  const {data} = req
-  res.status(200).json(data);
+  const user = req.user;
+  res.status(200).json(user);
 }
 
 
@@ -106,7 +106,8 @@ export const logoutController = async (req, res) => {
   try {
     res.clearCookie('refreshToken', {
       httpOnly: true,
-      sameSite: 'lax'
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production'
     });
     
     res.status(200).json({

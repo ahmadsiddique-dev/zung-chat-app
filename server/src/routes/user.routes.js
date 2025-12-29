@@ -12,7 +12,7 @@ const authRouter = Router();
 authRouter.route("/login").post(userLoginControler);
 authRouter.route("/signup").post(userSignupControler);
 authRouter.route("/refresh").get(verifyToken, handleRefresh);
-authRouter.route("/logout").post(logoutController);
+authRouter.route("/logout").post(verifyToken, logoutController);
 
 // User management routes
 authRouter.route("/users").get(verifyToken, getAllUsers);
