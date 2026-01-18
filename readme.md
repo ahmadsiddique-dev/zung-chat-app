@@ -1,3 +1,4 @@
+# Note : This app's backend was hosted on railway and now free tier has been ended so it will not be working so you might need to run it locally (Thankyou).
 # 💬 Zung Chat App
 
 <p align="center">
