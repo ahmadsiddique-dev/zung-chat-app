@@ -26,10 +26,6 @@ const SignUp = () => {
   };
 
   return (
-    <>
-    <div className="text-red-500 text-center w-full text-lg">
-      Note this app backend is not working currently so login will not function
-    </div>
     <div style={{
       minHeight: '100vh',
       display: 'flex',
@@ -179,7 +175,6 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 
